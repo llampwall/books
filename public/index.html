@@ -1,51 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CodingPhase - Learn To Code and Get Paid ASAP!</title>
-    <meta property="og:title" content="CodingPhase - Learn To Code and Get Paid ASAP!">
-    <meta name="description" content="Learn how to code from the best platform by building real projects that will help you land the dream job and get a high paying salary">
-    <meta property="og:description" content="Learn how to code from the best platform by building real projects that will help you land the dream job and get a high paying salary">
-    <meta property="og:image" content="https://codingphase.com/img/websitethumb.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:site_name" content="CodingPhase LLC">
-    <meta name="twitter:image:alt" content="Learn how to code from one of the best platforms online.">
-    <meta name="twitter:site" content="@codingphase">
-    <meta property="og:url" content="https://codingphase.com">
-    <link rel="canonical" href="/">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ad38f1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="apple-touch-icon" sizes="120x120" href="/img/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/iconsfavicon-16x16.png">
-    <link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <div class="home">
-        <div class="Aligner">
-          <div class="Aligner-item"><img src="/img/logo.png" alt="codingphase logo">
-            <h1>Dev-Starter-Kit</h1>
-            <div class="menu">
-              <ul>
-                <li><a href="http://starterkit.codingphase.com" target="new">Documentation</a></li>
-                <li><a href="http://www.codingphase.com" target="new">CodingPhase.Com</a></li>
-              </ul>
-            </div>
-            <div class="version-num">version 4.0.0</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script src="/js/dist/vendors~FirstComp.js"></script>
-    <script src="/js/dist/FirstComp.js"></script>
-    <script src="/js/dist/main.js"></script>
-  </body>
+
+<head>
+  <title>Library</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="/manifest.json">
+  <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    #approot {
+      background: #fcfc9c;
+    }
+
+    #approot.popupOpen {
+      filter: blur(10px)
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .all-books {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 20px;
+      padding: 40px;
+    }
+
+    .book-container {
+      background: brown;
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px dashed black;
+    }
+
+    .book-container .book {
+      background: red;
+      width: 200px;
+      height: 260px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      border: 2px solid black;
+    }
+
+    .book-container .book-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 300;
+      padding: 10px 0;
+    }
+
+    #myList {
+      background: #FCFC9C;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 400px;
+      height: 100vh;
+      transform: translateX(400px);
+      transition: transform .3s ease-in-out;
+      -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+    }
+
+    #myList.active {
+      transform: translateX(0px);
+      -webkit-box-shadow: -12px 10px 90px -21px rgba(0, 0, 0, .75);
+    }
+
+    #myList h3 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    #myList ul {
+      margin-bottom: 1.5rem;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    #myList ul li {
+      display: flex;
+      padding: 10px;
+      align-items: center;
+      list-style: square !important;
+    }
+
+    #myList ul li span.delete-btn {
+      right: 0;
+      margin-left: auto;
+      padding: 5px 15px;
+      background: #A52A2A;
+      color: white;
+      border-radius: 5px;
+      margin-left: 20px;
+      cursor: pointer;
+      border: 1px solid black;
+    }
+
+    #myList .close-list {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: inline-block;
+      width: 100%;
+      margin: 0 auto;
+      background: black;
+      color: white;
+      padding: 20px 40px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .open-list {
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: black;
+      padding: 10px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    .open-list.closed {
+      display: block;
+    }
+
+    .open-list.open {
+      display: none;
+    }
+
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .4s ease-in-out;
+    }
+
+    #modal.active {
+      background: rgba(0, 0, 0, .75);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #modal .modal-container {
+      max-width: 600px;
+      background: #fcfc9c;
+      padding: 20px;
+      position: relative;
+    }
+
+    #modal .modal-container .close-modal {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      font-size: 1.5rem;
+      background: red;
+      color: white;
+      cursor: pointer;
+    }
+
+    #modal .modal-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      grid-gap: 20px;
+    }
+
+    #modal .modal-grid .images {
+      width: 200px;
+      text-align: center;
+      border: 2px dashed black;
+    }
+
+    #modal .modal-grid .images .cover {
+      height: 300px;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      /* margin-bottom: 5px; */
+    }
+
+    #modal .modal-grid .images .add-btn {
+      color: black;
+      background: #A52A2A;
+      padding: 10px 30px;
+      display: inline-block;
+      width: 100%;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    #modal .modal-grid .info h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    #modal .modal-grid .info .info-line {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: .2rem;
+    }
+
+    #modal .modal-grid .info .info-line span {
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- App -->
+  <div id="app"></div>
+  <!-- Modal -->
+  <div id="modalroot"></div>
+
+  <script src="/js/dist/vendors~BooksApp.js"></script>
+  <script src="/js/dist/BooksApp.js"></script>
+</body>
+
 </html>
